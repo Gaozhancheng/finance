@@ -112,7 +112,34 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        if not username:
+            return apology("No username")
+        if not password:
+            return apology("No password")
+        if password != confirmation:
+            return apology("Please confirm your password")
+        #去数据库里检查注册过了没
+        #密码->哈希值
+        #用.schema看到数据库里数据类型
+        
+        #如果检查通过就插入数据库 并且说注册成功
+        #二编 因为数据库里写了“UNIQUE” 所以不用检查 可以直接插入 插入报错就证明已有数据
+        hash_password = generate_password_hash(password)
+        try:
+            db.execute(
+                "INSERT INTO users (username,hash) VALUES(?,?)",username,hash_password
+            )
+        except:
+            return apology("Username already exists")
+        return redirect("/login")
+        
+        
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
