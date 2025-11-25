@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+    <h1>Quoted</h1>
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            A share of {{ stock.name }} ({{ stock.symbol }}) costs {{ stock.price | usd }}.
+        </div>
+        <div class="mb-3">
+            {{stock.name}}({{stock.symbol}})的股价为{{ stock.price | usd }}。
+        </div>
+        
+    </form>
+{% endblock %}

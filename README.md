@@ -4,3 +4,7 @@
 # 项目管理
 我使用了uv管理此项目的依赖
 食用前请uv add -r requirements.txt喵
+# 注册用户
+目前有两个用户
+Test 123
+1 1

@@ -106,7 +106,17 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        if not symbol:
+            return apology("No symbol")
+        stock = lookup(symbol)
+        if not stock:
+            return apology(f"No such a symbol called {symbol}")
+        return render_template("quoted.html", stock=stock)
+    else:
+        #用户刚进入这个界面（还没POST）
+        return render_template("quote.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -135,6 +145,8 @@ def register():
             )
         except:
             return apology("Username already exists")
+        
+        flash("Registered!")
         return redirect("/login")
         
         
